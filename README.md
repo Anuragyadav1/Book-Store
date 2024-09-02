@@ -64,5 +64,6 @@ cd ../frontend
 npm start
 
 
-Open your browser and go to http://localhost:3000 to view the application.
+Open your browser and go to http://localhost:5173 to view the application.
+
 
