@@ -11,7 +11,7 @@ import userRoute from "./route/user.route.js";
 const app = express();
 
 app.use(cors({
-    origin:["http://localhost:5173","https://bookstore-my-first-web.vercel.app"],
+    origin:["http://localhost:5173","https://bookstore-my-first-application.vercel.app"],
     methods:['POST','GET','HEAD','PUT','DELETE'],
     credentials: true
 }));
