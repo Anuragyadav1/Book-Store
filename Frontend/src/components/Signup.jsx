@@ -21,7 +21,7 @@ function Signup() {
       password: data.password,
     };
     await axios
-      .post("https://book-store-application-tzan.onrender.com/user/signup", userInfo)
+      .post("https://book-store-application-tzan.onrender.com/user/signup", userInfo,{withCredentials: true})
       .then((res) => {
         console.log(res.data);
         if (res.data) {
