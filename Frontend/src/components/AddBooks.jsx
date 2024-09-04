@@ -66,7 +66,7 @@ function AddBooks() {
     e.preventDefault();
     if (validate()) {
       try {
-        await axios.post("https://book-store-application-rvg3.onrender.com/book/add", formData,{withCredentials: true});
+        await axios.post("https://my-book-store-application.onrender.com/book/add", formData,{withCredentials: true});
         navigate("/success");
       } catch (error) {
         console.log(error);
