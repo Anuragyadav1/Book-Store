@@ -11,7 +11,7 @@ import userRoute from "./route/user.route.js";
 const app = express();
 
 app.use(cors({
-    origin:["http://localhost:5173/","https://bookStore.web.app"],
+    origin:["http://localhost:5173","https://bookStore.web.app"],
     methods:['POST','GET','HEAD','PUT','DELETE'],
     credentials: true
 }));
@@ -21,7 +21,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 4000;
 const URI = process.env.MONGO_URI;
 
-console.log("Mongodb uri",URI)
+// console.log("Mongodb uri",URI)
 
 // connect to mongoDB
 
@@ -40,10 +40,7 @@ console.log("Mongodb uri",URI)
 
 const connectDatabase = () => {
     mongoose
-      .connect(URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      })
+      .connect(URI)
       .then((data) => {
         console.log("Database connected");
       });

@@ -66,7 +66,7 @@ function AddBooks() {
     e.preventDefault();
     if (validate()) {
       try {
-        await axios.post("http://localhost:4001/book/add", formData);
+        await axios.post("http://localhost:4001/book/add", formData,{withCredentials: true});
         navigate("/success");
       } catch (error) {
         console.log(error);
