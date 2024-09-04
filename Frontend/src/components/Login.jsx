@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axiosInstance from "../api/axiosInstance"
 import toast from "react-hot-toast";
 function Login() {
   const {
@@ -15,8 +15,8 @@ function Login() {
       email: data.email,
       password: data.password,
     };
-    await axios
-      .post("https://book-store-application-tzan.onrender.com/user/login", userInfo,{withCredentials: true})
+    await axiosInstance
+      .post("/user/login", userInfo)
       .then((res) => {
         console.log(res.data);
         if (res.data) {

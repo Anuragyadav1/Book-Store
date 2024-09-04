@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosInstance from "../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
 function AddBooks() {
@@ -66,7 +66,7 @@ function AddBooks() {
     e.preventDefault();
     if (validate()) {
       try {
-        await axios.post("https://book-store-application-tzan.onrender.com/book/add", formData,{withCredentials: true});
+        await axiosInstance.post("/book/add", formData);
         navigate("/success");
       } catch (error) {
         console.log(error);

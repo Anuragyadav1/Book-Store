@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axiosInstance from "../api/axiosInstance";
 import toast from "react-hot-toast";
 function Signup() {
   const location = useLocation();
@@ -20,8 +20,8 @@ function Signup() {
       email: data.email,
       password: data.password,
     };
-    await axios
-      .post("https://book-store-application-tzan.onrender.com/user/signup", userInfo,{withCredentials: true})
+    await axiosInstance
+      .post("/user/signup", userInfo)
       .then((res) => {
         console.log(res.data);
         if (res.data) {
