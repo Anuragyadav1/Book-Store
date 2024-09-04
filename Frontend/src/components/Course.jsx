@@ -12,6 +12,8 @@ function Course() {
         const res = await axios.get("https://book-store-application-tzan.onrender.com/book/get");
         console.log(res.data);
         setBook(res.data);
+
+        console.log("Course data",res.data);
       } catch (error) {
         console.log(error);
       }
