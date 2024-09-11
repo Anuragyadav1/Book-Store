@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import AboutUs from "../components/AboutUs";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -11,8 +10,6 @@ function About() {
             <div className=" min-h-screen">
             <AboutUs />
            </div>
-         
-            
            <Footer />
         
          </>

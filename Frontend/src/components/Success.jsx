@@ -7,7 +7,7 @@ function Success() {
   return (
     <>
     <Navbar/>
-    <div className=" min-h-screen max-w-screen-2xl container mx-auto md:px-20 px-4 py-12 text-center bg-white dark:bg-gray-900 mt-16">
+    <div className=" max-w-screen-2xl container mx-auto md:px-20 px-4 py-12 text-center bg-white dark:bg-gray-900 mt-16">
       <h1 className="text-2xl md:text-4xl font-bold text-pink-500 dark:text-pink-300">
         Success!
       </h1>

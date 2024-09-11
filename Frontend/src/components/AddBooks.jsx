@@ -12,6 +12,7 @@ function AddBooks() {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // Add loading state
   const navigate = useNavigate();
 
   const validate = () => {
@@ -43,10 +44,7 @@ function AddBooks() {
     if (!formData.image) {
       tempErrors.image = "Image URL is required";
       isValid = false;
-    } else if (!/^https?:\/\/.+\.(jpg|jpeg|png|gif)$/i.test(formData.image)) {
-      tempErrors.image = "Invalid image URL";
-      isValid = false;
-    }
+    } 
 
     // Title Validation
     if (!formData.title) {
@@ -65,11 +63,14 @@ function AddBooks() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
+      setLoading(true); // Set loading state to true
       try {
         await axiosInstance.post("/book/add", formData);
         navigate("/success");
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false); // Reset loading state
       }
     }
   };
@@ -161,9 +162,12 @@ function AddBooks() {
           </div>
           <button
             type="submit"
-            className="w-full bg-pink-500 dark:bg-pink-700 text-white px-4 py-2 rounded-md hover:bg-pink-700 dark:hover:bg-pink-600 duration-300"
+            className={`w-full bg-pink-500 dark:bg-pink-700 text-white px-4 py-2 rounded-md ${
+              loading ? "opacity-50 cursor-not-allowed" : "hover:bg-pink-700 dark:hover:bg-pink-600"
+            } duration-300`}
+            disabled={loading}
           >
-            Add Book
+            {loading ? "Adding..." : "Add Book"}
           </button>
         </form>
       </div>

@@ -9,8 +9,10 @@ function Signup() {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [isLoginModalOpen, setLoginModalOpen] = useState(false); // State to control login modal
+  const [isLoading, setIsLoading] = useState(false); // Loading state for signup
 
   const onSubmit = async (data) => {
+    setIsLoading(true); // Start loading
     const userInfo = {
       fullname: data.fullname,
       email: data.email,
@@ -29,6 +31,9 @@ function Signup() {
         if (err.response) {
           toast.error("Error: " + err.response.data.message);
         }
+      })
+      .finally(() => {
+        setIsLoading(false); // Stop loading
       });
   };
 
@@ -81,7 +86,18 @@ function Signup() {
 
               {/* Submit Button */}
               <div className="flex justify-between mt-6">
-                <button className="bg-pink-500 text-white rounded-md px-4 py-2 hover:bg-pink-700">Signup</button>
+                <button 
+                  type="submit"
+                  className={`bg-pink-500 text-white rounded-md px-4 py-2 hover:bg-pink-700 flex items-center ${
+                    isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-pink-700"
+                  }`} 
+                  disabled={isLoading} // Disable button while loading
+                >
+                  {isLoading ? (
+                    <span className="loader mr-2"></span> // Optionally add a loader here
+                  ) : null}
+                  {isLoading ? "Signing up..." : "Signup"}
+                </button>
                 <p className="text-xl">
                   Have an account?{" "}
                   <button
