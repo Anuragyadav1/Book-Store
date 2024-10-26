@@ -1,9 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-dotenv.config();
-
 import cors from "cors";
+
+dotenv.config();
 
 import bookRoute from "./route/book.route.js";
 import userRoute from "./route/user.route.js";
@@ -11,48 +11,45 @@ import userRoute from "./route/user.route.js";
 const app = express();
 
 app.use(cors({
-    origin:["http://localhost:5173","https://bookstore-my-first-application.vercel.app"],
-    methods:['POST','GET','HEAD','PUT','DELETE'],
+    origin: ["http://localhost:5173", "https://bookstore-my-first-application.vercel.app"],
+    methods: ['POST', 'GET', 'HEAD', 'PUT', 'DELETE'],
     credentials: true
 }));
 app.use(express.json());
 
-
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 const URI = process.env.MONGO_URI;
 
-// console.log("Mongodb uri",URI)
-
-// connect to mongoDB
-
+const connectDatabase = async () => {
+    try {
+        await mongoose.connect(URI);
+        console.log("Database connected");
+    } catch (error) {
+        console.error("Database connection error:", error);
+        process.exit(1); // Exit the process if the database connection fails
+    }
+};
 
 // Connect to MongoDB
-// const connectDB = async () => {
-//     try {
-//         // Connect to MongoDB
-//          mongoose.connect(URI)
-//         // Log successful connection
-//           console.log("Connected to mongoDB");
-//     } catch (error) {
-//     console.log("Error: ", error);
-// }
-// }
+connectDatabase();
 
-const connectDatabase = () => {
-    mongoose
-      .connect(URI)
-      .then((data) => {
-        console.log("Database connected");
-      });
-  };
-  
-  connectDatabase();
-// defining routes
+// Define routes
 app.use("/book", bookRoute);
 app.use("/user", userRoute);
 
-app.listen(PORT, () => {
+// Start the server
+const server = app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });
 
-
+// Graceful shutdown
+process.on("SIGTERM", () => {
+    console.log("SIGTERM signal received. Closing HTTP server.");
+    server.close(() => {
+        console.log("HTTP server closed.");
+        mongoose.connection.close(false, () => {
+            console.log("MongoDB connection closed.");
+            process.exit(0);
+        });
+    });
+});
